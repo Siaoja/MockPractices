@@ -2,6 +2,8 @@ package parking;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.mockito.Mockito.*;
 
 public class VipParkingStrategyTest {
@@ -11,7 +13,18 @@ public class VipParkingStrategyTest {
 
 	    /* Exercise 4, Write a test case on VipParkingStrategy.park()
 	    * With using Mockito spy, verify and doReturn */
-
+        //given
+        VipParkingStrategy mockedVipParkingStrategy = spy(new VipParkingStrategy());
+        Car mockCar = mock(Car.class);
+        when(mockCar.getName()).thenReturn("Car");
+        ParkingLot mockParkingLot = mock(ParkingLot.class);
+        when(mockParkingLot.getName()).thenReturn("parkinglot");
+        when(mockParkingLot.isFull()).thenReturn(true);
+        doReturn(true).when(mockedVipParkingStrategy).isAllowOverPark(mockCar);
+        //when
+        mockedVipParkingStrategy.park(Arrays.asList(mockParkingLot),mockCar);
+        //then
+        verify(mockedVipParkingStrategy,times(1)).createReceipt(mockParkingLot,mockCar);
     }
 
     @Test
