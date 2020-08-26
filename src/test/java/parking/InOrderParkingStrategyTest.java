@@ -15,16 +15,17 @@ public class InOrderParkingStrategyTest {
 
 	    /* Exercise 1, Write a test case on InOrderParkingStrategy.createReceipt()
 	    * With using Mockito to mock the input parameter */
-        InOrderParkingStrategy inOrderParkingStrategy = new InOrderParkingStrategy();
-        Car mockedCar = mock(Car.class);
-        ParkingLot mockedParkingLot = mock(ParkingLot.class);
-        when(mockedCar.getName()).thenReturn("car");
-        when(mockedParkingLot.getName()).thenReturn("parkinglot");
-//when
-        Receipt actual = inOrderParkingStrategy.park(Arrays.asList(mockedParkingLot), mockedCar);
-//then
-        assertEquals("car", actual.getCarName());
-        assertEquals("parkinglot", actual.getParkingLotName());
+        //given
+        ParkingLot mockParkingLot = mock(ParkingLot.class);
+        Car mockCar = mock(Car.class);
+        when(mockParkingLot.getName()).thenReturn("a");
+        when(mockCar.getName()).thenReturn("Car");
+        InOrderParkingStrategy inOrderParkingStrategy=new InOrderParkingStrategy();
+        //when
+        Receipt receipt=inOrderParkingStrategy.createReceipt(mockParkingLot,mockCar);
+        //then
+        assertEquals("a",receipt.getParkingLotName());
+        assertEquals("Car",receipt.getCarName());
     }
 
     @Test
@@ -32,7 +33,14 @@ public class InOrderParkingStrategyTest {
 
         /* Exercise 1, Write a test case on InOrderParkingStrategy.createNoSpaceReceipt()
          * With using Mockito to mock the input parameter */
-
+        //given
+        Car mockCar = mock(Car.class);
+        when(mockCar.getName()).thenReturn("Car");
+        InOrderParkingStrategy inOrderParkingStrategy=new InOrderParkingStrategy();
+        //when
+        Receipt receipt=inOrderParkingStrategy.createNoSpaceReceipt(mockCar);
+        //then
+        assertEquals("Car",receipt.getCarName());
     }
 
     @Test
