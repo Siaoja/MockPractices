@@ -2,7 +2,9 @@ package parking;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -93,6 +95,26 @@ public class InOrderParkingStrategyTest {
     public void testPark_givenThereIsMultipleParkingLotAndFirstOneIsFull_thenCreateReceiptWithUnfullParkingLot(){
 
         /* Exercise 3: Test park() method. Use Mockito.spy and Mockito.verify to test the situation for multiple parking lot situation */
+        //given
+        List<ParkingLot> parkingLots = new ArrayList<>();
+        ParkingLot parkingLot1 = mock(ParkingLot.class);
+        ParkingLot parkingLot2 = mock(ParkingLot.class);
+        parkingLots.add(parkingLot1);
+        parkingLots.add(parkingLot2);
+        Car mockCar = mock(Car.class);
+
+        when(mockCar.getName()).thenReturn("Car");
+        when(parkingLot1.isFull()).thenReturn(true);
+        when(parkingLot2.isFull()).thenReturn(false);
+        when(parkingLot2.getName()).thenReturn("parkinglot2");
+
+        InOrderParkingStrategy inOrderParkingStrategy = spy(new InOrderParkingStrategy());
+
+        //when
+        inOrderParkingStrategy.park(parkingLots,mockCar);
+
+        //then
+        verify(inOrderParkingStrategy, times(1)).createReceipt(parkingLot2,mockCar);
 
     }
 
